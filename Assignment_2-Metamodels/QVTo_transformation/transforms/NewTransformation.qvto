@@ -8,10 +8,27 @@ main() {
 }
 
 mapping CCL::CloudResources::toModel(): Graph::Graph {
-	self.resources[Resource]->map toNode();
+	nodes := self.resources[Resource]->map toNode();
 	name := "Generated graph";
 }
 
 mapping CCL::Resource::toNode(): Graph::Node {
-	label := self.label
+	var MIs = self.machineImages[MachineImage]->map toNode();
+	outEdges := self.machineImages[MachineImage]->map toEdge();
+	label := self.label;
+}
+
+mapping CCL::MachineImage::toNode(): Graph::Node {
+	label := self.label;
+	outEdges += object Graph::Edge {
+		style := Graph::Style::DOTTED;
+		target := object Graph::Node {
+			label := (self.storageSize.toString() + " GB");
+			shape := Graph::Shape::OVAL;
+		} 
+	};
+}
+
+mapping CCL::MachineImage::toEdge(): Graph::Edge {
+	target := self.resolveone(Graph::Node);
 }
