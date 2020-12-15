@@ -8,13 +8,22 @@ main() {
 }
 
 mapping CCL::CloudResources::toModel(): Graph::Graph {
-	var MIs = self.resources.machineImages->map toNode();
-	nodes += MIs;
-	nodes += self.resources->map toNode();
-	MIs.allInstances(Graph::Edge)->forEach(edge) {
-		nodes += edge.target;
+	self.resources.machineImages->map toNode();
+	var res = self.resources->map toNode();
+	res->forEach(n) {
+		nodes += n.allNodes();
 	};
 	name := "Generated graph";
+}
+
+// Recursively creates a set of all nodes that are children of the node and the node itself.
+query Graph::Node::allNodes(): Set(Graph::Node) {
+	var nodes: Set(Graph::Node);
+	nodes += self;
+	self.outEdges->forEach(e) {
+		nodes += e.target.allNodes();
+	};
+	return nodes;
 }
 
 mapping CCL::Resource::toNode(): Graph::Node {
@@ -24,22 +33,42 @@ mapping CCL::Resource::toNode(): Graph::Node {
 
 mapping CCL::MachineImage::toNode(): Graph::Node {
 	label := self.label;
-	outEdges += object Graph::Edge {
-		style := Graph::Style::DOTTED;
-		target := object Graph::Node {
-			label := (self.storageSize.toString() + " GB");
+	var children: Set(Graph::Node);
+	
+	// Storage node:
+	children += object Graph::Node {
+		label := (self.storageSize.toString() + " GB");
+		shape := Graph::Shape::OVAL;
+	};
+	
+	// Storage/Computing dependent nodes:
+	if self.oclIsTypeOf(CCL::ComputingImage) then {
+		var os := self.oclAsType(CCL::ComputingImage).os.toString();
+		children += object Graph::Node {
+			label := os;
 			shape := Graph::Shape::OVAL;
-		}
+		};
+		children += object Graph::Node {
+			label := self.vcpu.toString();
+			shape := Graph::Shape::OVAL;
+		};
+	} else { // It is a CCL::StorageImage
+		var engine := self.oclAsType(CCL::StorageImage).dbEngine.toString();
+		children += object Graph::Node {
+			label := engine;
+			shape := Graph::Shape::OVAL;
+		};
+	} endif;
+	
+	// Create edges for the new nodes:
+	children->forEach(child) {
+		outEdges += object Graph::Edge {
+			style := Graph::Style::DOTTED;
+			target := child
+		};
 	};
 }
 
-query CCL::MachineImage::nodes(): Set(Graph::Node) {
-	var nodes: Set(Graph::Node);
-	nodes += self.resolveone(Graph::Node);
-	return nodes;
-}
-
 mapping CCL::MachineImage::toEdge(): Graph::Edge {
-	log(self.resolveone(Graph::Node).label);
 	target := self.resolveone(Graph::Node);
 }
