@@ -8,12 +8,17 @@ main() {
 }
 
 mapping CCL::CloudResources::toModel(): Graph::Graph {
+	name := "Generated graph";
+
 	self.resources.machineImages->map toNode();
 	var res = self.resources->map toNode();
 	res->forEach(n) {
 		nodes += n.allNodes();
 	};
-	name := "Generated graph";
+	
+	var regions: Set(CCL::Region);
+	regions += self.resources.machineImages.region.oclAsSet();
+	nodes += regions->map toNode(self).allNodes();
 }
 
 // Recursively creates a set of all nodes that are children of the node and the node itself.
@@ -71,4 +76,20 @@ mapping CCL::MachineImage::toNode(): Graph::Node {
 
 mapping CCL::MachineImage::toEdge(): Graph::Edge {
 	target := self.resolveone(Graph::Node);
+}
+
+mapping CCL::Region::toNode(root: CCL::CloudResources): Graph::Node {
+	label := self.toString().toLower().firstToUpper();
+	var children: Set(Graph::Node);
+	
+	var si := root.resources.machineImages->select(mi | mi.region = self and mi.oclIsTypeOf(CCL::StorageImage));
+	var ci := root.resources.machineImages->select(mi | mi.region = self and mi.oclIsTypeOf(CCL::ComputingImage));
+	if si->size() > 0 then {
+		var siNode := object Graph::Node { label := 'Storage'; outEdges := si->map toEdge().clone(); };
+		outEdges += object Graph::Edge { target := siNode; };
+	} endif;
+	if ci->size() > 0 then {
+		var ciNode := object Graph::Node { label := 'Computing'; outEdges := ci->map toEdge().clone(); };
+		outEdges += object Graph::Edge { target := ciNode; };
+	} endif;
 }
