@@ -11,14 +11,10 @@ mapping CCL::CloudResources::toModel(): Graph::Graph {
 	name := "Generated graph";
 
 	self.resources.machineImages->map toNode();
-	var res = self.resources->map toNode();
-	res->forEach(n) {
-		nodes += n.allNodes();
-	};
 	
-	var regions: Set(CCL::Region);
-	regions += self.resources.machineImages.region.oclAsSet();
-	nodes += regions->map toNode(self).allNodes();
+	nodes += self.resources->map toNode().allNodes();
+	
+	nodes += self.resources.machineImages.region->map toNode(self).allNodes();
 }
 
 // Recursively creates a set of all nodes that are children of the node and the node itself.
@@ -32,7 +28,7 @@ query Graph::Node::allNodes(): Set(Graph::Node) {
 }
 
 mapping CCL::Resource::toNode(): Graph::Node {
-	outEdges := self.machineImages[MachineImage]->map toEdge();
+	outEdges := self.machineImages->map toEdge();
 	label := self.label;
 }
 
