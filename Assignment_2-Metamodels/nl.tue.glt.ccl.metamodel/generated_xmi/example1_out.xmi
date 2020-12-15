@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <graph:Graph xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:graph="http://glt.tue.nl/graph" xsi:schemaLocation="http://glt.tue.nl/graph ../../nl.tue.glt.graph.metamodel/model/graph.ecore" name="Generated graph">
-  <nodes label="my_cluster">
-    <outEdges/>
-    <outEdges/>
-  </nodes>
-  <nodes label="16 GB" shape="OVAL"/>
   <nodes label="my_db">
-    <outEdges style="DOTTED" target="//@nodes.1"/>
-  </nodes>
-  <nodes label="256 GB" shape="OVAL"/>
-  <nodes label="my_server">
     <outEdges style="DOTTED" target="//@nodes.3"/>
   </nodes>
+  <nodes label="my_server">
+    <outEdges style="DOTTED" target="//@nodes.4"/>
+  </nodes>
+  <nodes label="my_cluster">
+    <outEdges target="//@nodes.0"/>
+    <outEdges target="//@nodes.1"/>
+  </nodes>
+  <nodes label="16 GB" shape="OVAL"/>
+  <nodes label="256 GB" shape="OVAL"/>
 </graph:Graph>
