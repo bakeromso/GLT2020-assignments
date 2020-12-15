@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccl:CloudResources
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ccl="http://glt.tue.nl/ccl"
+    xsi:schemaLocation="http://glt.tue.nl/ccl ../model/ccl.ecore">
+  <resources
+      label="my_cluster">
+    <machineImages
+        xsi:type="ccl:StorageImage"
+        region="BOGOTA"
+        label="my_db"
+        vcpu="2"
+        memory="2"
+        storageSize="16"/>
+    <machineImages
+        xsi:type="ccl:ComputingImage"
+        region="BOGOTA"
+        label="my_server"
+        vcpu="4"
+        memory="8"
+        storageSize="256"
+        storageType="SSD"/>
+  </resources>
+</ccl:CloudResources>

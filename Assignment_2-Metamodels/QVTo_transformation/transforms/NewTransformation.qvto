@@ -1,5 +1,8 @@
-transformation NewTransformation();
+modeltype CCL uses "http://glt.tue.nl/ccl";
+modeltype Graph uses "http://glt.tue.nl/graph";
+
+transformation NewTransformation(in imodel : CCL, out omodel : Graph);
 
 main() {
-
+	log("Hello world!");
 }
