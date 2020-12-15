@@ -44,7 +44,7 @@ mapping CCL::MachineImage::toNode(): Graph::Node {
 	
 	// Storage/Computing dependent nodes:
 	if self.oclIsTypeOf(CCL::ComputingImage) then {
-		var os := self.oclAsType(CCL::ComputingImage).os.toString();
+		var os := self.oclAsType(CCL::ComputingImage).os.toString().toLower().firstToUpper();
 		children += object Graph::Node {
 			label := os;
 			shape := Graph::Shape::OVAL;
@@ -54,7 +54,7 @@ mapping CCL::MachineImage::toNode(): Graph::Node {
 			shape := Graph::Shape::OVAL;
 		};
 	} else { // It is a CCL::StorageImage
-		var engine := self.oclAsType(CCL::StorageImage).dbEngine.toString();
+		var engine := self.oclAsType(CCL::StorageImage).dbEngine.toString().FormatDBEngineString();
 		children += object Graph::Node {
 			label := engine;
 			shape := Graph::Shape::OVAL;
@@ -88,4 +88,16 @@ mapping CCL::Region::toNode(root: CCL::CloudResources): Graph::Node {
 		var ciNode := object Graph::Node { label := 'Computing'; outEdges := ci->map toEdge().clone(); };
 		outEdges += object Graph::Edge { target := ciNode; };
 	} endif;
+}
+
+query String::FormatDBEngineString(): String {
+	var str = self;
+	switch {
+		case (self = 'MYSQL') str := 'MySQL';
+		case (self = 'POSTGRESQL') str := 'PostgreSQL';
+		case (self = 'MARIADB') str := 'MariaDB';
+		case (self = 'ORACLE') str := 'Oracle';
+		case (self = 'SQLSERVER') str := 'SQL Server';
+	};
+	return str;
 }
