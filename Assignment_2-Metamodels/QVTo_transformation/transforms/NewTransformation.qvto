@@ -4,5 +4,14 @@ modeltype Graph uses "http://glt.tue.nl/graph";
 transformation NewTransformation(in imodel : CCL, out omodel : Graph);
 
 main() {
-	log("Hello world!");
+	imodel.rootObjects()[CloudResources]->map toModel();
+}
+
+mapping CCL::CloudResources::toModel(): Graph::Graph {
+	self.resources[Resource]->map toNode();
+	name := "Generated graph";
+}
+
+mapping CCL::Resource::toNode(): Graph::Node {
+	label := self.label
 }
