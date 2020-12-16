@@ -1,31 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <graph:Graph xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:graph="http://glt.tue.nl/graph" xsi:schemaLocation="http://glt.tue.nl/graph ../../nl.tue.glt.graph.metamodel/model/graph.ecore" name="Generated graph">
-  <nodes label="my_server">
-    <outEdges style="DOTTED" target="//@nodes.3"/>
-    <outEdges style="DOTTED" target="//@nodes.4"/>
-    <outEdges style="DOTTED" target="//@nodes.5"/>
-  </nodes>
-  <nodes label="my_db">
-    <outEdges style="DOTTED" target="//@nodes.2"/>
-    <outEdges style="DOTTED" target="//@nodes.6"/>
-  </nodes>
+  <nodes label="4 cores" shape="OVAL"/>
   <nodes label="MySQL" shape="OVAL"/>
-  <nodes label="4" shape="OVAL"/>
-  <nodes label="256 GB" shape="OVAL"/>
-  <nodes label="Linux" shape="OVAL"/>
+  <nodes label="my_server">
+    <outEdges style="DASHED" target="//@nodes.0"/>
+    <outEdges style="DASHED" target="//@nodes.4"/>
+    <outEdges style="DASHED" target="//@nodes.6"/>
+  </nodes>
   <nodes label="16 GB" shape="OVAL"/>
+  <nodes label="256 GB" shape="OVAL"/>
+  <nodes label="my_db">
+    <outEdges style="DASHED" target="//@nodes.1"/>
+    <outEdges style="DASHED" target="//@nodes.3"/>
+  </nodes>
+  <nodes label="Linux" shape="OVAL"/>
   <nodes label="my_cluster">
-    <outEdges target="//@nodes.1"/>
-    <outEdges target="//@nodes.0"/>
+    <outEdges target="//@nodes.5"/>
+    <outEdges target="//@nodes.2"/>
   </nodes>
-  <nodes label="Storage">
-    <outEdges target="//@nodes.1"/>
-  </nodes>
-  <nodes label="Bogota">
-    <outEdges target="//@nodes.8"/>
+  <nodes label="storage_cluster">
     <outEdges target="//@nodes.10"/>
   </nodes>
-  <nodes label="Computing">
-    <outEdges target="//@nodes.0"/>
+  <nodes label="PostgreSQL" shape="OVAL"/>
+  <nodes label="second_db">
+    <outEdges style="DASHED" target="//@nodes.9"/>
+    <outEdges style="DASHED" target="//@nodes.11"/>
   </nodes>
+  <nodes label="9 GB" shape="OVAL"/>
+  <nodes label="Bogota">
+    <outEdges target="//@nodes.14"/>
+    <outEdges target="//@nodes.13"/>
+  </nodes>
+  <nodes label="Computing">
+    <outEdges target="//@nodes.2"/>
+  </nodes>
+  <nodes label="Storage">
+    <outEdges target="//@nodes.5"/>
+  </nodes>
+  <nodes label="Storage">
+    <outEdges target="//@nodes.10"/>
+  </nodes>
+  <nodes label="Frankfurt">
+    <outEdges target="//@nodes.15"/>
+    <outEdges target="//@nodes.17"/>
+  </nodes>
+  <nodes label="Computing"/>
 </graph:Graph>

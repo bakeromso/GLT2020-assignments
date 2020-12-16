@@ -23,4 +23,16 @@
         storageSize="256"
         storageType="SSD"/>
   </resources>
+  <resources
+      label="storage_cluster">
+    <machineImages
+        xsi:type="ccl:StorageImage"
+        region="FRANKFURT"
+        label="second_db"
+        vcpu="4"
+        memory="34"
+        storageSize="9"
+        storageType="SSD"
+        dbEngine="POSTGRESQL"/>
+  </resources>
 </ccl:CloudResources>

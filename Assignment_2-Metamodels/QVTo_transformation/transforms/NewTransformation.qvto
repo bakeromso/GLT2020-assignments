@@ -50,7 +50,7 @@ mapping CCL::MachineImage::toNode(): Graph::Node {
 			shape := Graph::Shape::OVAL;
 		};
 		children += object Graph::Node {
-			label := self.vcpu.toString();
+			label := self.vcpu.toString() + " cores";
 			shape := Graph::Shape::OVAL;
 		};
 	} else { // It is a CCL::StorageImage
@@ -64,7 +64,7 @@ mapping CCL::MachineImage::toNode(): Graph::Node {
 	// Create edges for the new nodes:
 	children->forEach(child) {
 		outEdges += object Graph::Edge {
-			style := Graph::Style::DOTTED;
+			style := Graph::Style::DASHED;
 			target := child
 		};
 	};
@@ -80,14 +80,14 @@ mapping CCL::Region::toNode(root: CCL::CloudResources): Graph::Node {
 	
 	var si := root.resources.machineImages->select(mi | mi.region = self and mi.oclIsTypeOf(CCL::StorageImage));
 	var ci := root.resources.machineImages->select(mi | mi.region = self and mi.oclIsTypeOf(CCL::ComputingImage));
-	if si->size() > 0 then {
+//	if si->size() > 0 then {
 		var siNode := object Graph::Node { label := 'Storage'; outEdges := si->map toEdge().clone(); };
 		outEdges += object Graph::Edge { target := siNode; };
-	} endif;
-	if ci->size() > 0 then {
+//	} endif;
+//	if ci->size() > 0 then {
 		var ciNode := object Graph::Node { label := 'Computing'; outEdges := ci->map toEdge().clone(); };
 		outEdges += object Graph::Edge { target := ciNode; };
-	} endif;
+//	} endif;
 }
 
 query String::FormatDBEngineString(): String {
