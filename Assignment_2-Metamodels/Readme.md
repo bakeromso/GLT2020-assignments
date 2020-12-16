@@ -1,3 +1,5 @@
+This assignment was made by Damy van Valenberg student number 1394487 and Niek van der Dussen 1382217
+
 The input files can be found at ```nl.tue.glt.ccl.metamodel > generated_xmi > example1.xmi```
 The output file can be found at ```nl.tue.glt.ccl.metamodel > generated_xmi > example1_out.xmi```
 
